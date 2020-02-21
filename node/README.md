@@ -22,5 +22,7 @@ docker rmi name_image:tag
 
 ## Estructura de proyecto en Node
 package.json    -> dependencias
+
 app.js          -> servidor web configurado con express
+
 index.js        -> conexion base de datos
