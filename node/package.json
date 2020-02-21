@@ -1,0 +1,13 @@
+{
+    "name": "node_app",
+    "version": "1.0.0",
+    "description": "Node.js on Docker",
+    "author": "Eduardo Bustos <ebustosmerino@gmail.com>",
+    "main": "app.js",
+    "scripts": {
+        "start": "node app.js"
+    },
+    "dependencies": {
+        "express": "^4.16.2"
+    }
+}
