@@ -3,12 +3,15 @@
     "version": "1.0.1",
     "description": "Node.js on Docker",
     "author": "Eduardo Bustos <ebustosmerino@gmail.com>",
-    "main": "app.js",
+    "main": "index.js",
     "scripts": {
-        "start": "node app.js"
+        "start": "nodemon index.js"
     },
     "dependencies": {
         "express": "^4.16.2",
         "mongoose": "^5.3.7"
+    },
+    "devDependencies": {
+        "nodemon": "^1.11.0"
     }
 }
