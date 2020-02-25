@@ -3,6 +3,26 @@
 var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 
+function getUsers(req, res) {
+    User.find({}, (err, users) => {
+        if (err) {
+            res.status(500).send({
+                message: 'Error en getUsers'
+            });
+        } else {
+            if (!users) {
+                res.status(404).send({
+                    message: 'No hay listado'
+                });
+            } else {
+                res.status(200).send({
+                    users: users
+                });
+            }
+        }
+    })
+}
+
 function getUser(req, res) {
     var userId = req.params.id;
 
@@ -133,6 +153,7 @@ function updateUser(req, res) {
 }
 
 module.exports = {
+    getUsers,
     getUser,
     saveUser,
     loginUser,
