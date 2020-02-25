@@ -3,6 +3,31 @@
 var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
 
+function getUser(req, res) {
+    var userId = req.params.id;
+
+    User.findOne({
+        _id: userId
+    }, (err, user) => {
+        if (err) {
+            res.status(500).send({
+                message: 'Error en getUser'
+            });
+        } else {
+            if (!user) {
+                res.status(404).send({
+                    message: 'El usuario no existe'
+                });
+            } else {
+                res.status(200).send({
+                    user: user
+                });
+            }
+        }
+    });
+
+}
+
 function saveUser(req, res) {
     var user = new User();
 
@@ -84,7 +109,32 @@ function loginUser(req, res) {
     });
 }
 
+function updateUser(req, res) {
+    var userId = req.params.id;
+    var params = req.body;
+
+    User.findByIdAndUpdate(userId, params, (err, userUpdated) => {
+        if (err) {
+            res.status(500).send({
+                message: 'Error en updateUser'
+            });
+        } else {
+            if (!userUpdated) {
+                res.status(404).send({
+                    message: 'No se ha podido actualizar el usuario'
+                });
+            } else {
+                res.status(200).send({
+                    user: userUpdated
+                });
+            }
+        }
+    });
+}
+
 module.exports = {
+    getUser,
     saveUser,
-    loginUser
+    loginUser,
+    updateUser
 }
