@@ -2,6 +2,7 @@
 
 var User = require('../models/user');
 var bcrypt = require('bcrypt-nodejs');
+var jwt = require('../services/jwt');
 
 function getUsers(req, res) {
     User.find({}, (err, users) => {
@@ -115,9 +116,15 @@ function loginUser(req, res) {
             } else {
                 bcrypt.compare(password, user.password, function (err, check) {
                     if (check) {
-                        res.status(200).send({
-                            user: user
-                        });
+                        if (params.gethash) {
+                            res.status(200).send({
+                                token: jwt.createToken(user)
+                            });
+                        } else {
+                            res.status(200).send({
+                                user: user
+                            });
+                        }
                     } else {
                         res.status(404).send({
                             message: 'El usuario no ha podido logearse'
