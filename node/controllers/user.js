@@ -159,10 +159,48 @@ function updateUser(req, res) {
     });
 }
 
+function uploadImage(req, res) {
+    var userId = req.params.id;
+
+    if (req.files) {
+        var file_path = req.files.image.path;
+        //var file_split = file_path.split('\\');
+        var file_split = file_path.split('/');/* MacOS */
+        var file_name = file_split[2];
+        var ext_split = file_name.split('\.');
+        var file_ext = ext_split[1];
+
+        if (file_ext == 'png' || file_ext == 'jpg' || file_ext == 'jpeg' || file_ext == 'gif') {
+            User.findByIdAndUpdate(userId, {
+                image: file_name
+            }, (err, userUpdated) => {
+                if (!userUpdated) {
+                    res.status(404).send({
+                        message: 'No se ha podido actualizar la imagen del usuario'
+                    });
+                } else {
+                    res.status(200).send({
+                        message: 'Fichero subido ' + file_name
+                    });
+                }
+            });
+        } else {
+            res.status(404).send({
+                message: 'Solo se permiten archivos de imagenes'
+            });
+        }
+    } else {
+        res.status(404).send({
+            message: 'No has subido ningun fichero'
+        });
+    }
+}
+
 module.exports = {
     getUsers,
     getUser,
     saveUser,
     loginUser,
-    updateUser
+    updateUser,
+    uploadImage
 }
