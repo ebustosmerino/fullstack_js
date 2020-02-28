@@ -13,8 +13,10 @@ app.use(bodyParser.json());
 
 //Importar rutas
 var user_routes = require('./routes/user');
+var artist_routes = require('./routes/artist');
 
 //Cargar rutas
 app.use('/api', user_routes);
+app.use('/api', artist_routes);
 
 module.exports = app;
