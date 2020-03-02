@@ -18,10 +18,21 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._userService.signup();
   }
 
   public onSubmit() {
     console.log(this.user);
+
+    this._userService.signup(this.user).subscribe(
+      response => {
+        console.log(response);
+      },
+      error => {
+        var errorMessage = <any>error;
+        if (errorMessage != null) {
+          console.log(error);
+        }
+      }
+    );
   }
 }
